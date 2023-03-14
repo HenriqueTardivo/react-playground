@@ -1,0 +1,18 @@
+* {
+  padding: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background-color: #000000;
+  font-amily: arial sans-serif;
+}
+
+main {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  color: #ffffff;
+  height: 100vh;
+}
