@@ -6,13 +6,17 @@
   font-size: 100%;
   vertical-align: baseline;
   background-color: #000000;
-  font-amily: arial sans-serif;
+  font-family: Roboto, Arial, sans-serif;
 }
 
 main {
   display: grid;
   justify-content: center;
   align-content: center;
-  color: #ffffff;
+  color: #707070;
   height: 100vh;
+}
+
+svg {
+  color: #ffffff;
 }

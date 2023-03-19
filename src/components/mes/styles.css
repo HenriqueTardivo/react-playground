@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.mes {
+  padding-top: 5px;
+  font-size: larger;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.btnNavigator,
+svg {
+  transition: 0.3s;
+  background: transparent;
+}
+
+.btnNavigator:hover {
+  transform: scale(1.4);
+}

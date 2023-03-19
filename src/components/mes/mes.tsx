@@ -1,26 +1,44 @@
 import { CaretLeft, CaretRight } from "phosphor-react";
+import { useMemo, useState } from "react";
 import { Meses, mesesNumero } from "../../constants";
-import * as styles from "./style/mes.style";
+import { useMes, CalculaDate } from "./logic/useMes";
+import "./styles.css";
 
 type Props = {
-  mes: typeof mesesNumero[number];
-  mudaMes: (mes: number) => void;
+  date: CalendarioProps;
+  mudaData: (data: CalendarioProps) => void;
 };
 
-export const Mes = ({ mes, mudaMes }: Props) => {
-  const descMes = Meses[mes] || "";
+export const Mes = ({ date, mudaData }: Props) => {
+  const { mes, ano } = date;
+  const descMes = Meses[date.mes] || "";
+  const [trigger, setTrigger] = useState<CalculaDate>();
+
+  const { calculaDate } = useMes();
+
+  useMemo(() => {
+    if (trigger) mudaData(calculaDate(trigger));
+  }, [trigger]);
+
+  function handleNavigate(proximo: boolean) {
+    setTrigger({
+      ano,
+      mes,
+      proximo,
+    });
+  }
 
   return (
-    <div style={styles.conatainer}>
-      <div>
+    <div className="container">
+      <button className="btnNavigator" onClick={() => handleNavigate(false)}>
         <CaretLeft size={32} />
-      </div>
+      </button>
 
-      <div style={styles.mes}>{descMes} </div>
+      <div className="mes">{descMes} </div>
 
-      <div>
+      <button className="btnNavigator" onClick={() => handleNavigate(true)}>
         <CaretRight size={32} />
-      </div>
+      </button>
     </div>
   );
 };

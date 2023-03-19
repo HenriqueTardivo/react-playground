@@ -1,5 +1,3 @@
-import { CalendarioProps } from "../calendario";
-
 export function useDias() {
   function diasMes(ano: number, mes: number) {
     return new Date(ano, mes, 0).getDate();
@@ -14,12 +12,12 @@ export function useDias() {
   }
 
   function arrayPrimeirosDias(qtdeAnterior: number, diaSemana: number) {
-    let resultado: number[] = [];
+    let resultado: Dia[] = [];
 
     if (diaSemana === 0) return resultado;
 
     do {
-      resultado.push(qtdeAnterior);
+      resultado.push({ dia: qtdeAnterior, atual: false });
       qtdeAnterior -= 1;
       diaSemana -= 1;
     } while (diaSemana > 1);
@@ -27,90 +25,62 @@ export function useDias() {
     return resultado.reverse();
   }
 
-  function arrayUltimosDias(ultimoDia: number) {
-    let resultado: number[] = [],
+  function arrayDiasSeq(qtdeDias: number, atual: boolean) {
+    let result: Dia[] = [],
       dia = 1;
 
-    if (ultimoDia === 7) return resultado;
-
     do {
-      resultado.push(dia);
+      result.push({
+        dia,
+        atual,
+      });
       dia += 1;
-      ultimoDia += 1;
-    } while (ultimoDia < 7);
-
-    return resultado;
-  }
-
-  function montaMes(primeiros: number[], ultimos: number[]) {
-    let semanaAtual = 5,
-      dia = 0,
-      result: [number[]] = [[]];
-
-    const completa = (array: number[], onde: "comeco" | "fim") => {
-      const paramLeng = 7 - array.length;
-
-      let result = [];
-
-      do {
-        dia += 1;
-        result.push(dia);
-      } while (result.length < paramLeng);
-
-      if (onde === "comeco") {
-        result = [...array, ...result];
-      } else {
-        result = [...result, ...array];
-      }
-
-      return result;
-    };
-
-    do {
-      let semana: number[] = [];
-
-      switch (semanaAtual) {
-        case 5:
-          semana = completa(primeiros, "comeco");
-          break;
-        case 1:
-          semana = completa(ultimos, "fim");
-          break;
-
-        default:
-          semana = completa([], "comeco");
-          break;
-      }
-
-      semanaAtual -= 1;
-      result.push(semana);
-    } while (semanaAtual > 0);
+    } while (dia <= qtdeDias);
 
     return result;
   }
 
-  function calculaDias({ mes, ano }: CalendarioProps) {
-    const dias = {
-      qtdeDias: {
-        anterior: diasMes(ano, mes - 1),
-        atual: diasMes(ano, mes),
-      },
-      diasSemana: {
-        primeiro: primeiroDia(ano, mes),
-        ultimo: ultimoDia(ano, mes),
-      },
+  function montaMes(primeiros: Dia[], diasAtuais: Dia[], ultimos: Dia[]) {
+    let result = Array.from({ length: 6 }, () => new Array(7)),
+      linha = 0,
+      coluna = 0;
+
+    const concatArray = (dia: Dia) => {
+      result[linha][coluna] = dia;
+
+      coluna += 1;
+      if (coluna === 7) {
+        linha += 1;
+        coluna = 0;
+      }
     };
 
-    console.log(dias);
+    primeiros.forEach((dia) => concatArray(dia));
 
-    const diasMesPassado = arrayPrimeirosDias(
-      dias.qtdeDias.anterior,
-      dias.diasSemana.primeiro
-    );
+    diasAtuais.forEach((dia) => concatArray(dia));
 
-    const diasProximoMes = arrayUltimosDias(dias.diasSemana.ultimo);
+    ultimos.forEach((dia) => concatArray(dia));
 
-    const arrayMes = montaMes(diasMesPassado, diasProximoMes);
+    return result;
+  }
+
+  function calculaDias({ mes, ano }: { mes: number; ano: number }) {
+    const dias = {
+      qt_anterior: diasMes(ano, mes - 1),
+      qt_atual: diasMes(ano, mes),
+      primeiro: primeiroDia(ano, mes),
+      ultimo: ultimoDia(ano, mes),
+    };
+
+    const diasMesPassado = arrayPrimeirosDias(dias.qt_anterior, dias.primeiro);
+
+    const qtDiasProx = 42 - dias.qt_atual - diasMesPassado.length;
+
+    const diasProximoMes = arrayDiasSeq(qtDiasProx, false);
+
+    const diasAtuais = arrayDiasSeq(dias.qt_atual, true);
+
+    const arrayMes = montaMes(diasMesPassado, diasAtuais, diasProximoMes);
 
     return arrayMes;
   }
