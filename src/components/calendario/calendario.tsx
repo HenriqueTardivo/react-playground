@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { diasDaSemana } from "../../constants";
 import { useDias } from "./logic/useDias";
 import { useHoverEffect } from "./logic/useHoverEffect";
@@ -6,9 +6,14 @@ import "./styles.css";
 
 export const Calendario = ({ mes, ano }: CalendarioProps) => {
   const [hoveredIndexes, setHoveredIndexes] = useState<Number[]>();
+  const [dias, setDias] = useState<Dia[][]>();
+
   const { calculateIndexes } = useHoverEffect();
-  const { calculaDias } = useDias(),
-    dias = calculaDias({ mes, ano });
+  const { calculaDias } = useDias();
+
+  useMemo(() => {
+    setDias(calculaDias({ mes, ano }));
+  }, [mes, ano]);
 
   return (
     <table>
@@ -17,7 +22,7 @@ export const Calendario = ({ mes, ano }: CalendarioProps) => {
           <th key={index}>{dia}</th>
         ))}
       </tr>
-      {dias.map((semana, linha) => (
+      {dias?.map((semana, linha) => (
         <tr key={linha}>
           {semana.map(({ dia, atual }, coluna) => {
             const key = Number(`${linha}${coluna}`);

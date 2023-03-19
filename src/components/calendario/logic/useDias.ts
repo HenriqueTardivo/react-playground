@@ -41,7 +41,7 @@ export function useDias() {
   }
 
   function montaMes(primeiros: Dia[], diasAtuais: Dia[], ultimos: Dia[]) {
-    let result = Array.from({ length: 6 }, () => new Array(7)),
+    let result = Array.from({ length: 6 }, () => new Array(7) as Dia[]),
       linha = 0,
       coluna = 0;
 
@@ -64,7 +64,7 @@ export function useDias() {
     return result;
   }
 
-  function calculaDias({ mes, ano }: { mes: number; ano: number }) {
+  function calculaDias({ mes, ano }: { mes: number; ano: number }): Dia[][] {
     const dias = {
       qt_anterior: diasMes(ano, mes - 1),
       qt_atual: diasMes(ano, mes),
