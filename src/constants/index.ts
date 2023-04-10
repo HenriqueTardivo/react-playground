@@ -22,5 +22,3 @@ export const Meses: { [mes: number]: string } = {
   11: "Novembro",
   12: "Dezembro",
 } as const;
-
-export const mesesNumero = Array.from({ length: 12 }, (_, i) => i + 1);

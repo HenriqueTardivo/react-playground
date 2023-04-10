@@ -1,0 +1,29 @@
+.component {
+  border: 1px solid #ffffff;
+  border-radius: 30px;
+  width: 80%;
+  height: 50px;
+  padding: 20px;
+}
+
+.component:hover {
+  border: 1px solid #b0b0b0;
+}
+
+.linkTitle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+  align-content: center;
+  height: 100%;
+}
+
+span {
+  color: #ffffff;
+  font-size: x-large;
+}
+
+.cardHover {
+  color: #b0b0b0;
+}

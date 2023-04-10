@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+  flex-direction: column;
+  text-align: center;
+}
+
+h1 {
+  font-size: xx-large;
+  color: #ffffff;
+}
+
+.cards {
+  display: grid;
+  padding: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+}

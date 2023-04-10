@@ -1,11 +1,11 @@
-.container {
+.mesContainer {
   display: flex;
   width: 100%;
+  padding-top: 140px;
   justify-content: space-between;
 }
 
 .mes {
-  padding-top: 5px;
   font-size: larger;
   font-weight: bold;
   color: #ffffff;

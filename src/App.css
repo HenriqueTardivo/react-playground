@@ -10,10 +10,6 @@
 }
 
 main {
-  display: grid;
-  justify-content: center;
-  align-content: center;
-  color: #707070;
   height: 100vh;
 }
 

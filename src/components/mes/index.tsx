@@ -1,6 +1,6 @@
 import { CaretLeft, CaretRight } from "phosphor-react";
 import { useMemo, useState } from "react";
-import { Meses, mesesNumero } from "../../constants";
+import { Meses } from "../../constants";
 import { useMes, CalculaDate } from "./logic/useMes";
 import "./styles.css";
 
@@ -29,7 +29,7 @@ export const Mes = ({ date, mudaData }: Props) => {
   }
 
   return (
-    <div className="container">
+    <div className="mesContainer">
       <button className="btnNavigator" onClick={() => handleNavigate(false)}>
         <CaretLeft size={32} />
       </button>
